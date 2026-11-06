@@ -1,0 +1,10 @@
+- insert:
+    - id: mcp-hdc-opendata
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: hdc_opendata
+        transport: streamable-http
+        url: https://hdc-opendata-mcp.nuradalab.com/mcp
+        expandTemplates: true
+        headers:
+          Authorization: 'Bearer ${credential:HDC_MCP_API_KEY}'

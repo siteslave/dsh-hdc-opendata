@@ -1,0 +1,11 @@
+{
+  "name": "dsh-hdc-opendata",
+  "version": "0.1.0",
+  "description": "Connect DeepSeek Harness to the HDC OpenData MCP server",
+  "files": ["cordis.patch.yml"],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}
