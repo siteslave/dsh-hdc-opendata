@@ -9,14 +9,25 @@
 
 ## ติดตั้งในโปรไฟล์ Web
 
-รันจากโฟลเดอร์ปลั๊กอิน
+หากยังไม่มีซอร์สโค้ด ให้โคลน repository ก่อน
+
+```sh
+git clone https://github.com/siteslave/dsh-hdc-opendata.git
+cd dsh-hdc-opendata
+```
+
+รันคำสั่งต่อไปนี้จากโฟลเดอร์ที่มี `package.json` และ `cordis.patch.yml`
 
 ```sh
 dsh plugin --profile web add "$PWD"
 dsh --profile web --dump-config
 ```
 
-ตรวจว่ามี layer `dsh-hdc-opendata` จากนั้นตั้งค่า environment variable `HDC_MCP_API_KEY` ให้กับ process ที่จะเปิด Harness ตัวอย่างนี้ใช้ Bash หรือ Zsh และรับ key จากแป้นพิมพ์แบบซ่อนข้อความ
+ตรวจว่า config มี layer `dsh-hdc-opendata` และรายการ MCP client ชื่อ `mcp-hdc-opendata`
+
+## ตั้งค่า API key และเปิด Web UI
+
+รันใน Bash หรือ Zsh ตัวอย่างนี้รับ key แบบซ่อนข้อความและส่งผ่าน environment variable ให้ Harness
 
 ```sh
 printf 'HDC MCP API key: '
@@ -26,7 +37,7 @@ export HDC_MCP_API_KEY
 dsh web
 ```
 
-หากเปิด Harness อยู่แล้ว ให้ปิดแล้วเปิดจาก shell ที่ตั้งค่าตัวแปรนี้ เพื่อให้ Host ได้รับ key ตัว bundle เก็บเพียงชื่ออ้างอิงของ credential เมื่อไม่มี credential การเชื่อมต่อจะอยู่ในสถานะ `waiting-credentials`
+หาก Harness เปิดอยู่ ให้ปิดแล้วเปิดใหม่จาก shell ที่ตั้งค่า `HDC_MCP_API_KEY` ตัว bundle เก็บเพียงชื่ออ้างอิงของ credential และส่ง key เป็น Bearer token เมื่อเชื่อมต่อ MCP Server
 
 ## ทดลองใช้
 
@@ -34,7 +45,15 @@ dsh web
 
 > ใช้ HDC OpenData ค้นหาตัวชี้วัดเกี่ยวกับเบาหวาน 3 รายการ แล้วแสดงชื่อตัวชี้วัดและ table_name
 
-ตรวจว่า Harness เรียก `mcp__hdc_opendata__search_indicators` สำเร็จ ตัวอย่างเครื่องมืออื่น ได้แก่ `get_report_schema`, `get_report_data` และ `get_last_updated` ภายใต้คำนำหน้าเดียวกัน หากเซิร์ฟเวอร์ตอบ `401` ให้ตรวจว่า key เป็นของ MCP Server และยังใช้งานได้
+ตรวจว่า Harness เรียก `mcp__hdc_opendata__search_indicators` สำเร็จ ตัวอย่างเครื่องมืออื่น ได้แก่ `get_report_schema`, `get_report_data` และ `get_last_updated` ภายใต้คำนำหน้าเดียวกัน
+
+## แก้ปัญหาการเชื่อมต่อ
+
+| อาการ | วิธีตรวจสอบ |
+| --- | --- |
+| ไม่พบเครื่องมือ HDC OpenData | รัน `dsh --profile web --dump-config` แล้วตรวจว่ามีรายการ `mcp-hdc-opendata` ในโปรไฟล์ Web |
+| สถานะ `waiting-credentials` | ตั้งค่าและ export `HDC_MCP_API_KEY` ใน shell เดียวกับที่ใช้เปิด Harness แล้วเปิดใหม่ |
+| เซิร์ฟเวอร์ตอบ `401 Unauthorized` | ตรวจว่า key ออกให้สำหรับ MCP Server และยังใช้งานได้ |
 
 ## ทดลองแบบชั่วคราวหรือถอนการติดตั้ง
 
