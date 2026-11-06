@@ -5,7 +5,6 @@
 ## สิ่งที่ต้องมี
 
 - DeepSeek Harness CLI รุ่นที่ MCP client รองรับ `expandTemplates` และโปรไฟล์มี credentials provider เช่นโปรไฟล์ Web มาตรฐาน
-- API key สำหรับ **MCP Server** ที่ออกจาก [หน้า Dashboard](https://hdc-opendata-mcp.nuradalab.com/admin/) ของเซิร์ฟเวอร์ โดยผู้ดูแลจะออก key ให้จากหน้ารายละเอียดผู้ใช้งาน
 
 ## ติดตั้งในโปรไฟล์ Web
 
